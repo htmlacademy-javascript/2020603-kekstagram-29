@@ -37,7 +37,7 @@ const generateComments = () => {
   return result;
 };
 
-const createPhotoDescriptions = (amount) => {
+const createPhotos = (amount) => {
   const result = [];
   for (let i = 0; i < amount; i++) {
     result.push({
@@ -51,6 +51,6 @@ const createPhotoDescriptions = (amount) => {
   return result;
 };
 
-const photoDescriptions = createPhotoDescriptions(PHOTO_COUNT);
+const photos = createPhotos(PHOTO_COUNT);
 
-export { photoDescriptions };
+export { photos };
