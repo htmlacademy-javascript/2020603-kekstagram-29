@@ -3,11 +3,10 @@ import { showBigPicture } from './big-picture.js';
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture'); // Шаблон изображения пользователя
 // const thumbnailsContainer = document.querySelector('.pictures'); // Контейнер для изображений пользователей
 
-const createThumbnail = ({ id, url, description, likes, comments }) => {
+const createThumbnail = ({ url, description, likes, comments }) => {
   const thumbnail = thumbnailTemplate.cloneNode(true); // глубокая копия шаблона изображения
 
-  //thumbnail.querySelector('.picture__img').id = id;
-  thumbnail.dataset.thumbnailId = id;
+  //thumbnail.dataset.thumbnailId = id;
   thumbnail.querySelector('.picture__img').src = url;
   thumbnail.querySelector('.picture__img').alt = description;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
