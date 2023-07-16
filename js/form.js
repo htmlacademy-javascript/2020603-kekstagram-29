@@ -1,9 +1,14 @@
+import { isEscapeKey } from './util.js';
+
 const bodyElement = document.querySelector('body');
 const formElement = document.querySelector('.img-upload__form');
 const overlayElement = formElement.querySelector('.img-upload__overlay'); // модалка с выбором фильтра, полями хэштега и комментария и кнопки "Опубликовать". Изначально скрыт
 const fileUploadElement = formElement.querySelector('#upload-file'); // поле выбора файла для отправки (.img-upload__input ). Изначально скрыт
 const btnCloseElement = formElement.querySelector('#upload-cancel');
+const hashtagsFieldElement = formElement.querySelector('.text__hashtags');
+const commentFieldElement = formElement.querySelector('.text__description');
 
+const isTextFieldFocused = () => document.activeElement === hashtagsFieldElement || document.activeElement === commentFieldElement; // есть ли фокус на текстовом поле
 
 const showModal = () => {
   overlayElement.classList.remove('hidden');
@@ -24,7 +29,7 @@ const onClickCloseBtn = () => {
 };
 
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape') { // почему-то если в условие добавить isEscapeKey, то hideModalForm срабатывает по клику ЛЮБОЙ кнопки, а не только лишь Escape
+  if (isEscapeKey(evt) && !isTextFieldFocused()) {
     evt.preventDefault();
     hideModalForm();
   }

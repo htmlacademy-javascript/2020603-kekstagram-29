@@ -16,7 +16,7 @@ const createIdGenerator = () => {
   };
 };
 
-// const isEscapeKey = (evt) => evt.key === 'Escape';
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 // const onDocumentKeydown = (evt, cb) => {
 //   if (isEscapeKey(evt)) {
@@ -26,4 +26,4 @@ const createIdGenerator = () => {
 // };
 
 
-export { getRandomInteger, getRandomArrayElement, createIdGenerator };
+export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey };
