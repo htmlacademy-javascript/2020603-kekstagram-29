@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import { resetScale } from './scale.js';
+import { addEventsEffects, removeEventsEffects } from './effects.js';
 
 const HASHTAGS_COUNT_MAX = 5;
 const SYMBOLS_VALID = /^#[a-za-яё0-9]{1,19}$/i;
@@ -48,11 +49,13 @@ const onFormSubmit = (evt) => {
 const showModal = () => {
   overlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
+  addEventsEffects();
 };
 
 const hideModalForm = () => {
   formElement.reset();
   resetScale();
+  removeEventsEffects();
   pristine.reset();
   overlayElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
@@ -60,9 +63,7 @@ const hideModalForm = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onClickCloseButton = () => {
-  hideModalForm();
-};
+const onClickCloseButton = () => hideModalForm();
 
 function onDocumentKeydown(evt) {
   if (isEscapeKey(evt) && !isTextFieldFocused()) {
@@ -77,12 +78,7 @@ const onfileUploadChange = () => {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-// fileUploadElement.addEventListener('change', onfileUploadChange);
-
-const renderModalForm = () => {
-  fileUploadElement.addEventListener('change', onfileUploadChange);
-  //addValidatorPristine();
-};
+const renderModalForm = () => fileUploadElement.addEventListener('change', onfileUploadChange);
 
 formElement.addEventListener('submit', onFormSubmit);
 
