@@ -1,11 +1,27 @@
-import { getPosts } from './data.js';
+import { getData, sendData } from './api.js';
+import { showAlert } from './util.js';
 import { renderThumbnails } from './thumbnail.js';
-import { renderModalForm } from './form.js';
+import { renderModalForm, hideModalForm, setUserFormSubmit } from './form.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
 //import { renderGallery } from './gallery.js';
 
-const thumbnailsContainer = document.querySelector('.pictures');
+setUserFormSubmit(async (data) => {
+  try {
+    await sendData(data);
+    hideModalForm();
+    showSuccessMessage();
+  } catch (err) {
+    showErrorMessage();
+  }
+});
 
-renderThumbnails(getPosts(), thumbnailsContainer);
+try {
+  const data = await getData();
+  const thumbnailsContainer = document.querySelector('.pictures');
+  renderThumbnails(data, thumbnailsContainer);
+} catch (err) {
+  showAlert(err.message);
+}
 
 renderModalForm();
 //renderGallery(getPosts());

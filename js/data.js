@@ -1,4 +1,5 @@
 import { getRandomInteger, getRandomArrayElement, createIdGenerator } from './util.js';
+// import { getData } from './api.js';
 
 const Posts = {
   PHOTO_COUNT: 25,
@@ -40,12 +41,12 @@ const createComment = () => ({
 const createPost = (index) => ({
   id: index,
   url: `photos/${index}.jpg`,
-  description: getRandomArrayElement(Posts.PHOTO_DESCRIPTIONS),
   likes: getRandomInteger(Posts.LIKE_MIN_COUNT, Posts.LIKE_MAX_COUNT),
   comments: Array.from(
     { length: getRandomInteger(Posts.COMMENTS_MIN_COUNT, Posts.COMMENTS_MAX_COUNT) },
     createComment
-  )
+  ),
+  description: getRandomArrayElement(Posts.PHOTO_DESCRIPTIONS)
 });
 
 const getPosts = () => Array.from(
