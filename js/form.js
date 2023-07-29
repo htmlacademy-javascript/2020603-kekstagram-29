@@ -9,6 +9,10 @@ const ErrorMessages = {
   INVALID_PATTERN: 'Неверно составлен хэштег(и)',
   NOT_UNIQUE: 'Хэштеги должны быть уникальными'
 };
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Отправляю...'
+};
 
 const bodyElement = document.querySelector('body');
 const formElement = document.querySelector('.img-upload__form');
@@ -17,7 +21,7 @@ const fileUploadElement = formElement.querySelector('#upload-file'); // поле
 const buttonCloseElement = formElement.querySelector('#upload-cancel');
 const hashtagsFieldElement = formElement.querySelector('.text__hashtags');
 const commentFieldElement = formElement.querySelector('.text__description');
-// const submitButtonElement = formElement.querySelector('.img-upload__submit'); // кнопка "Опубликовать" в модалке
+const submitButtonElement = formElement.querySelector('.img-upload__submit'); // кнопка "Опубликовать" в модалке
 
 const isTextFieldFocused = () => document.activeElement === hashtagsFieldElement || document.activeElement === commentFieldElement; // есть ли фокус на текстовом поле
 
@@ -45,6 +49,28 @@ const onFormSubmit = (evt) => {
   }
 };
 // функции валидации END
+const blockSubmitButton = () => {
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = (callback) => {
+  formElement.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      blockSubmitButton();
+      await callback(new FormData(formElement));
+      unblockSubmitButton();
+    }
+  });
+};
 
 const showModal = () => {
   overlayElement.classList.remove('hidden');
@@ -82,4 +108,4 @@ const renderModalForm = () => fileUploadElement.addEventListener('change', onfil
 
 formElement.addEventListener('submit', onFormSubmit);
 
-export { renderModalForm };
+export { renderModalForm, hideModalForm, setUserFormSubmit };
