@@ -16,16 +16,14 @@ const removeElement = (evt) => {
   }
 };
 
-const showSuccessMessage = () => {
-  bodyElement.append(messageSuccess.cloneNode(true));
+const showMessage = (messageElement) => {
+  bodyElement.append(messageElement.cloneNode(true));
   document.addEventListener('click', removeElement);
   document.addEventListener('keydown', removeElement);
 };
 
-const showErrorMessage = () => {
-  bodyElement.append(messageError.cloneNode(true));
-  document.addEventListener('click', removeElement);
-  document.addEventListener('keydown', removeElement);
-};
+const showSuccessMessage = () => showMessage(messageSuccess);
+
+const showErrorMessage = () => showMessage(messageError);
 
 export { showSuccessMessage, showErrorMessage };
