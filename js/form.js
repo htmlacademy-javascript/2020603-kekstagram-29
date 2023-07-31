@@ -101,7 +101,7 @@ const hideModalForm = () => {
 const onClickCloseButton = () => hideModalForm();
 
 function onDocumentKeydown(evt) {
-  if (isEscapeKey(evt) && !isTextFieldFocused()) {
+  if (isEscapeKey(evt) && !isTextFieldFocused() && !document.querySelector('.error')) {
     evt.preventDefault();
     hideModalForm();
   }
