@@ -20,7 +20,7 @@ const formElement = document.querySelector('.img-upload__form');
 const overlayElement = formElement.querySelector('.img-upload__overlay'); // модалка с выбором фильтра, полями хэштега и комментария и кнопки "Опубликовать". Изначально скрыт
 const fileUploadElement = formElement.querySelector('#upload-file'); // поле выбора файла для отправки (.img-upload__input ). Изначально скрыт
 const photoPreviewElement = formElement.querySelector('.img-upload__preview img');
-// const effectsPreviewsElements = formElement.querySelectorAll('.effects__preview');
+const effectsPreviewsElements = formElement.querySelectorAll('.effects__preview');
 const buttonCloseElement = formElement.querySelector('#upload-cancel');
 const hashtagsFieldElement = formElement.querySelector('.text__hashtags');
 const commentFieldElement = formElement.querySelector('.text__description');
@@ -112,9 +112,9 @@ const onfileUploadChange = () => {
 
   if (file && isValidType(file)) {
     photoPreviewElement.src = URL.createObjectURL(file);
-    // effectsPreviewsElements.forEach((preview) => {
-    //   preview.style.backgroundImage = `url('${photoPreviewElement.src}')`;
-    // });
+    effectsPreviewsElements.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreviewElement.src}')`;
+    });
   }
 
   showModal();

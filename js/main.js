@@ -4,7 +4,6 @@ import { renderThumbnails } from './thumbnail.js';
 import { renderModalForm, hideModalForm, setUserFormSubmit } from './form.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 import { showSortingForm, setDebouncedSorting } from './photo-sorting.js';
-//import { renderGallery } from './gallery.js';
 
 setUserFormSubmit(async (data) => {
   try {
@@ -21,9 +20,7 @@ try {
   renderThumbnails(data);
   showSortingForm();
   setDebouncedSorting(data);
+  renderModalForm();
 } catch (err) {
   showAlert(err.message);
 }
-
-renderModalForm();
-//renderGallery(getPosts());
