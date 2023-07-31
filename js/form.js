@@ -4,6 +4,7 @@ import { addEventsEffects, removeEventsEffects } from './effects.js';
 
 const HASHTAGS_COUNT_MAX = 5;
 const SYMBOLS_VALID = /^#[a-za-яё0-9]{1,19}$/i;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const ErrorMessages = {
   INVALID_COUNT: `Максимум ${HASHTAGS_COUNT_MAX} хэштегов`,
   INVALID_PATTERN: 'Неверно составлен хэштег(и)',
@@ -18,6 +19,8 @@ const bodyElement = document.querySelector('body');
 const formElement = document.querySelector('.img-upload__form');
 const overlayElement = formElement.querySelector('.img-upload__overlay'); // модалка с выбором фильтра, полями хэштега и комментария и кнопки "Опубликовать". Изначально скрыт
 const fileUploadElement = formElement.querySelector('#upload-file'); // поле выбора файла для отправки (.img-upload__input ). Изначально скрыт
+const photoPreviewElement = formElement.querySelector('.img-upload__preview img');
+// const effectsPreviewsElements = formElement.querySelectorAll('.effects__preview');
 const buttonCloseElement = formElement.querySelector('#upload-cancel');
 const hashtagsFieldElement = formElement.querySelector('.text__hashtags');
 const commentFieldElement = formElement.querySelector('.text__description');
@@ -48,7 +51,13 @@ const onFormSubmit = (evt) => {
     evt.preventDefault();
   }
 };
+
+const isValidType = (file) => {
+  const fileName = file.name.toLowerCase();
+  return FILE_TYPES.some((it) => fileName.endsWith(it));
+};
 // функции валидации END
+
 const blockSubmitButton = () => {
   submitButtonElement.disabled = true;
   submitButtonElement.textContent = SubmitButtonText.SENDING;
@@ -99,6 +108,15 @@ function onDocumentKeydown(evt) {
 }
 
 const onfileUploadChange = () => {
+  const file = fileUploadElement.files[0];
+
+  if (file && isValidType(file)) {
+    photoPreviewElement.src = URL.createObjectURL(file);
+    // effectsPreviewsElements.forEach((preview) => {
+    //   preview.style.backgroundImage = `url('${photoPreviewElement.src}')`;
+    // });
+  }
+
   showModal();
   buttonCloseElement.addEventListener('click', onClickCloseButton);
   document.addEventListener('keydown', onDocumentKeydown);

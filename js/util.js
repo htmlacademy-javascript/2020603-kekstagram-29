@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+const TIMEOUT_DELAY = 500;
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -48,5 +49,13 @@ const isEscapeKey = (evt) => evt.key === 'Escape';
 //   }
 // };
 
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
+  let timeoutId;
 
-export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey, showAlert };
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export { getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey, showAlert, debounce };

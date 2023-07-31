@@ -1,7 +1,7 @@
 import { showBigPicture } from './big-picture.js';
 
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture'); // Шаблон изображения пользователя
-// const thumbnailsContainer = document.querySelector('.pictures'); // Контейнер для изображений пользователей
+const thumbnailsContainer = document.querySelector('.pictures'); // Контейнер для изображений пользователей
 
 const createThumbnail = ({ url, description, likes, comments }) => {
   const thumbnail = thumbnailTemplate.cloneNode(true); // глубокая копия шаблона изображения
@@ -15,7 +15,7 @@ const createThumbnail = ({ url, description, likes, comments }) => {
   return thumbnail;
 };
 
-const renderThumbnails = (pictures, container) => {
+const renderThumbnails = (pictures) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
@@ -28,8 +28,7 @@ const renderThumbnails = (pictures, container) => {
     fragment.append(thumbnail);
   });
 
-  container.append(fragment); // thumbnailsContainer.append(fragment);
+  thumbnailsContainer.append(fragment);
 };
 
-// renderThumbnails(photos);
 export { renderThumbnails };
