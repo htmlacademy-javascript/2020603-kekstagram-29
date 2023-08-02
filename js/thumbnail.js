@@ -15,9 +15,13 @@ const createThumbnail = ({ url, description, likes, comments }) => {
   return thumbnail;
 };
 
-const renderThumbnails = (pictures) => {
+const removeThumbnails = () => document.querySelectorAll('.picture').forEach((thumbnail) => thumbnail.remove());
+
+const renderThumbnails = (thumbnails) => {
   const fragment = document.createDocumentFragment();
-  pictures.forEach((picture) => {
+  removeThumbnails();
+
+  thumbnails.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
 
     thumbnail.addEventListener('click', (evt) => {

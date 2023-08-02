@@ -1,5 +1,4 @@
 import { getRandomInteger, getRandomArrayElement, createIdGenerator } from './util.js';
-// import { getData } from './api.js';
 
 const Posts = {
   PHOTO_COUNT: 25,

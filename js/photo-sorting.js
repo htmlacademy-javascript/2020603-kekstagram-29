@@ -3,45 +3,50 @@ import { debounce } from './util.js';
 
 const RANDOM_PICTURES_COUNT = 10;
 
-const sortingContainer = document.querySelector('.img-filters');
-const sortingForm = sortingContainer.querySelector('.img-filters__form');
-const defaultSorting = sortingForm.querySelector('#filter-default');
-const randomSorting = sortingForm.querySelector('#filter-random');
-const discussedSorting = sortingForm.querySelector('#filter-discussed');
-const sortingButtons = sortingForm.querySelectorAll('.img-filters__button');
+const sortingSection = document.querySelector('.img-filters');
+const sortButtons = sortingSection.querySelectorAll('.img-filters__button');
+const sortByRandomButton = sortingSection.querySelector('#filter-random');
+const sortByCommentsButton = sortingSection.querySelector('#filter-discussed');
 
 const sortRandomly = () => Math.random() - 0.5;
 const sortByComments = (postOne, postTwo) => postTwo.comments.length - postOne.comments.length;
 
-const sortThumbnails = (thumbnails, sortButton = defaultSorting) => {
+const showSortingSection = () => sortingSection.classList.remove('img-filters--inactive');
 
-  if (sortButton === randomSorting) {
-    return [...thumbnails].sort(sortRandomly).slice(0, RANDOM_PICTURES_COUNT); // или thumbnails.toSorted(sortRandomly).slice(0, RANDOM_PICTURES_COUNT);
-  } else if (sortButton === discussedSorting) {
-    return [...thumbnails].sort(sortByComments); // или thumbnails.toSorted(sortByComments);
+// Функция сортировки массива объектов-миниатюр и их последующей перерисовки в соответствии с выбранным способом сортировки
+const updateThumbnails = (targetElement, thumbnails) => {
+  const copyThumbnails = thumbnails.slice();
+  let sortedThumbnails = [];
+
+  switch (targetElement) {
+    case sortByRandomButton:
+      copyThumbnails.sort(sortRandomly);
+      sortedThumbnails = copyThumbnails.slice(0, RANDOM_PICTURES_COUNT);
+      return renderThumbnails(sortedThumbnails);
+
+    case sortByCommentsButton:
+      sortedThumbnails = copyThumbnails.sort(sortByComments);
+      return renderThumbnails(sortedThumbnails);
+
+    default:
+      return renderThumbnails(thumbnails);
   }
-
-  return [...thumbnails];
 };
 
-const removeThumbnails = () => document.querySelectorAll('.picture').forEach((thumbnail) => thumbnail.remove());
+// Функция перерисовки миниатюр с задержкой («устранение дребезга»)
+const renderThumbnailsWithDelay = debounce((targetElement, thumbnails) => updateThumbnails(targetElement, thumbnails));
 
-const onSortingFormClick = (evt, thumbnails) => {
-  sortingButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
+// Обработчик клика по какой-либо кнопке сортировки: смена CSS-классов у кнопок и вызов функции перерисовки миниатюр
+const onSortingButtonClick = (evt, thumbnails) => {
+  const sortButton = evt.target;
 
-  const sortingButton = evt.target;
-  sortingButton.classList.add('img-filters__button--active');
+  sortButtons.forEach((button) => button.classList.remove('img-filters__button--active'));
+  sortButton.classList.add('img-filters__button--active');
 
-  removeThumbnails();
-  renderThumbnails(sortThumbnails(thumbnails, sortingButton));
+  renderThumbnailsWithDelay(sortButton, thumbnails);
 };
 
-const setDebouncedSorting = (thumbnails) => {
-  sortingForm.addEventListener('click', debounce((evt) => {
-    onSortingFormClick(evt, thumbnails);
-  }));
-};
+const setDebouncedSorting = (thumbnails) => sortButtons.forEach((sortButton) =>
+  sortButton.addEventListener('click', (evt) => onSortingButtonClick(evt, thumbnails)));
 
-const showSortingForm = () => sortingContainer.classList.remove('img-filters--inactive');
-
-export { showSortingForm, setDebouncedSorting };
+export { showSortingSection, setDebouncedSorting };
