@@ -20,8 +20,8 @@ try {
   renderThumbnails(data);
   showSortingSection();
   setDebouncedSorting(data);
+  renderModalForm();
 } catch (err) {
   showAlert(err.message);
 }
-
 renderModalForm();
