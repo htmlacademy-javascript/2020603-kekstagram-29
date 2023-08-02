@@ -16,16 +16,8 @@ const scaleImage = (value) => {
   scaleInputElement.value = `${value}%`;
 };
 
-const onSmallerButtonClick = () => {
-  // const currentValue = parseInt(scaleInputElement.value, 10);
-  // const newValue = currentValue - ScalingOptions.STEP;
-  // if (newValue < ScalingOptions.MIN) {
-  //   scaleImage(ScalingOptions.MIN);
-  // } else {
-  //   scaleImage(newValue);
-  // }
-  scaleImage(Math.max(parseInt(scaleInputElement.value, 10) - ScalingOptions.STEP, ScalingOptions.MIN));
-};
+const onSmallerButtonClick = () => scaleImage(Math.max(parseInt(scaleInputElement.value, 10) - ScalingOptions.STEP, ScalingOptions.MIN));
+
 const onBiggerButtonClick = () => {
   scaleImage(Math.min(parseInt(scaleInputElement.value, 10) + ScalingOptions.STEP, ScalingOptions.MAX));
 };

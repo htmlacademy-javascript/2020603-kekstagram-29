@@ -42,13 +42,6 @@ const createIdGenerator = () => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-// const onDocumentKeydown = (evt, cb) => {
-//   if (isEscapeKey(evt)) {
-//     evt.preventDefault();
-//     cb();
-//   }
-// };
-
 const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   let timeoutId;
 

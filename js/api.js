@@ -12,18 +12,6 @@ const ErrorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз'
 };
 
-// const load = (route, errorText, method = Method.GET, body = null) =>
-//   fetch(`${BASE_URL}${route}`, { method, body })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error();
-//       }
-//       return response.json();
-//     })
-//     .catch(() => {
-//       throw new Error(errorText);
-//     });
-
 const load = async (route, errorText, method = Method.GET, body = null) => {
   try {
     const response = await fetch(`${BASE_URL}${route}`, { method, body });

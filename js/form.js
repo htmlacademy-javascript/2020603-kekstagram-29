@@ -17,18 +17,17 @@ const SubmitButtonText = {
 
 const bodyElement = document.querySelector('body');
 const formElement = document.querySelector('.img-upload__form');
-const overlayElement = formElement.querySelector('.img-upload__overlay'); // модалка с выбором фильтра, полями хэштега и комментария и кнопки "Опубликовать". Изначально скрыт
-const fileUploadElement = formElement.querySelector('#upload-file'); // поле выбора файла для отправки (.img-upload__input ). Изначально скрыт
+const overlayElement = formElement.querySelector('.img-upload__overlay');
+const fileUploadElement = formElement.querySelector('#upload-file');
 const photoPreviewElement = formElement.querySelector('.img-upload__preview img');
 const effectsPreviewsElements = formElement.querySelectorAll('.effects__preview');
 const buttonCloseElement = formElement.querySelector('#upload-cancel');
 const hashtagsFieldElement = formElement.querySelector('.text__hashtags');
 const commentFieldElement = formElement.querySelector('.text__description');
-const submitButtonElement = formElement.querySelector('.img-upload__submit'); // кнопка "Опубликовать" в модалке
+const submitButtonElement = formElement.querySelector('.img-upload__submit');
 
-const isTextFieldFocused = () => document.activeElement === hashtagsFieldElement || document.activeElement === commentFieldElement; // есть ли фокус на текстовом поле
+const isTextFieldFocused = () => document.activeElement === hashtagsFieldElement || document.activeElement === commentFieldElement;
 
-// функции валидации BEGIN
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper'
@@ -56,7 +55,6 @@ const isValidType = (file) => {
   const fileName = file.name.toLowerCase();
   return FILE_TYPES.some((it) => fileName.endsWith(it));
 };
-// функции валидации END
 
 const blockSubmitButton = () => {
   submitButtonElement.disabled = true;

@@ -6,7 +6,6 @@ const thumbnailsContainer = document.querySelector('.pictures'); // Контей
 const createThumbnail = ({ url, description, likes, comments }) => {
   const thumbnail = thumbnailTemplate.cloneNode(true); // глубокая копия шаблона изображения
 
-  //thumbnail.dataset.thumbnailId = id;
   thumbnail.querySelector('.picture__img').src = url;
   thumbnail.querySelector('.picture__img').alt = description;
   thumbnail.querySelector('.picture__comments').textContent = comments.length;
@@ -15,8 +14,12 @@ const createThumbnail = ({ url, description, likes, comments }) => {
   return thumbnail;
 };
 
+const removeThumbnails = () => document.querySelectorAll('.picture').forEach((thumbnail) => thumbnail.remove());
+
 const renderThumbnails = (pictures) => {
   const fragment = document.createDocumentFragment();
+  removeThumbnails();
+
   pictures.forEach((picture) => {
     const thumbnail = createThumbnail(picture);
 
